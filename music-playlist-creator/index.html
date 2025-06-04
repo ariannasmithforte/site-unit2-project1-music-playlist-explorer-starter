@@ -1,121 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Music Playlist Explorer</title>
-    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-    
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
     <header>
-        <h1>Music Playlist Explorer</h1>
+      <h1>Music Playlist Explorer</h1>
     </header>
 
-    <main> 
-        <section class="playlist-container">
-            <article class="playlist-card">
-            <img src="" alt="">
-            <h2 class="playlist-title">Playlist Title</h2>
-            <p class="creator-name">Creator Name</p>
-            <p class="like-count">Like Count</p>
-            </article>
+    <main>
+      <section class="playlist-container">
+        <article class="playlist-card">
+          <img src="assets/img/broadway.jpg" alt="Picture of the NYC Broadway" />
+          <h2 class="playlist-title">Broadway Belts & Ballads</h2>
+          <p class="creator-name">Creator Name</p>
+          <p class="like-count">Like Count</p>
+        </article>
 
-            <article class="playlist-card">
-            <img src="" alt="">
-            <h2 class="playlist-title">Playlist Title</h2>
-            <p class="creator-name">Creator Name</p>
-            <p class="like-count">Like Count</p>
-            </article>
+        <article class="playlist-card">
+          <img src="assets/img/rnb.jpg" alt="A picture of a RNB record." />
+          <h2 class="playlist-title">Silk & Honey</h2>
+          <p class="creator-name">Creator Name</p>
+          <p class="like-count">Like Count</p>
+        </article>
 
-            <article class="playlist-card">
-            <img src="" alt="">
-            <h2 class="playlist-title">Playlist Title</h2>
-            <p class="creator-name">Creator Name</p>
-            <p class="like-count">Like Count</p>
-            </article>
+        <article class="playlist-card">
+          <img src="assets/img/soul.jpg" alt="A picture girl in a white dress." />
+          <h2 class="playlist-title">Soul Full of Grace</h2>
+          <p class="creator-name">Creator Name</p>
+          <p class="like-count">Like Count</p>
+        </article>
 
-            <article class="playlist-card">
-            <img src="" alt="">
-            <h2 class="playlist-title">Playlist Title</h2>
-            <p class="creator-name">Creator Name</p>
-            <p class="like-count">Like Count</p>
-            </article>
+        <article class="playlist-card">
+          <img src="assets/img/rap.jpg" alt="Picture of a rap battle." />
+          <h2 class="playlist-title">Mic Drop Moments</h2>
+          <p class="creator-name">Creator Name</p>
+          <p class="like-count">Like Count</p>
+        </article>
 
-            <article class="playlist-card">
-            <img src="" alt="">
-            <h2 class="playlist-title">Playlist Title</h2>
-            <p class="creator-name">Creator Name</p>
-            <p class="like-count">Like Count</p>
-            </article>
+        <article class="playlist-card">
+          <img src="assets/img/pop.jpg" alt="placeholder img" />
+          <h2 class="playlist-title">Bubblegum & Bangers</h2>
+          <p class="creator-name">Creator Name</p>
+          <p class="like-count">Like Count</p>
+        </article>
 
-            <article class="playlist-card">
-            <img src="" alt="">
-            <h2 class="playlist-title">Playlist Title</h2>
-            <p class="creator-name">Creator Name</p>
-            <p class="like-count">Like Count</p>
-            </article>
+        <article class="playlist-card">
+          <img src="assets/img/sleep.jpg" alt="A sign that states'Get some sleep'" />
+          <h2 class="playlist-title">Sleepyhead Serenades</h2>
+          <p class="creator-name">Creator Name</p>
+          <p class="like-count">Like Count</p>
+        </article>
 
-            <article class="playlist-card">
-            <img src="" alt="">
-            <h2 class="playlist-title">Playlist Title</h2>
-            <p class="creator-name">Creator Name</p>
-            <p class="like-count">Like Count</p>
-            </article>
+        <article class="playlist-card">
+          <img src="assets/img/indie.jpg" alt="A picture of a glittering ocean." />
+          <h2 class="playlist-title">Indie Bloom</h2>
+          <p class="creator-name">Creator Name</p>
+          <p class="like-count">Like Count</p>
+        </article>
 
-            <article class="playlist-card">
-            <img src="" alt="">
-            <h2 class="playlist-title">Playlist Title</h2>
-            <p class="creator-name">Creator Name</p>
-            <p class="like-count">Like Count</p>
-            </article>
-        </section>
+        <article class="playlist-card">
+          <img src="assets/img/throwback.jpg" alt="A picutre of a record" />
+          <h2 class="playlist-title">Back Then Vibes</h2>
+          <p class="creator-name">Creator Name</p>
+          <p class="like-count">Like Count</p>
+        </article>
+      </section>
     </main>
 
+    <!-- Modal -->
     <div class="modal-overlay" id="modal">
-        <div class="modal-content">
-            
-            <!-- Playlist Header -->
-            <div class="playlist-header">
-                <img>
-                <h2 id="playlist-title">Playlist Title</h2>
-                <p id="playlist-creator">Creator Name</p>
-            </div>
+      <span class="close">&times;</span>
+      <div class="modal-content">
+        <!-- Playlist Header -->
+        <div class="playlist-header">
+          <img src="assets/img/playlist.png" alt="Playlist Cover" />
+          <div class="playlist-info">
+            <h2 class="playlist-title">Playlist Title</h2>
+            <p class="playlist-creator">Creator Name</p>
+          </div>
+        </div>
 
-            <!-- Song List -->
-            <div class="song-list">
-                <img>
-                <h3 id="song-title">Song Title</h3>
-                <p id="artist-name">Artist Name</p>
-                <p id="album-name">Album Name</p>
-                <p id="song-duration">0.00</p>
-            </div>
+        <!-- Song List -->
+        <div class="song-list">
+          <img src="assets/img/song.png" alt="Song Cover" />
+          <div class="song-info">
+            <h3 class="song-title">Song Title</h3>
+            <p class="artist-name">Artist Name</p>
+            <p class="album-name">Album Name</p>
+            <p class="song-duration">0:00</p>
+          </div>
+        </div>
 
-            <div class="song-list">
-                <img>
-                <h3 id="song-title">Song Title</h3>
-                <p id="artist-name">Artist Name</p>
-                <p id="album-name">Album Name</p>
-                <p id="song-duration">0.00</p>
-            </div>
+        <div class="song-list">
+          <img src="assets/img/song.png" alt="Song Cover" />
+          <div class="song-info">
+            <h3 class="song-title">Song Title</h3>
+            <p class="artist-name">Artist Name</p>
+            <p class="album-name">Album Name</p>
+            <p class="song-duration">0:00</p>
+          </div>
+        </div>
 
-            <div class="song-list">
-                <img>
-                <h3 id="song-title">Song Title</h3>
-                <p id="artist-name">Artist Name</p>
-                <p id="album-name">Album Name</p>
-                <p id="song-duration">0.00</p>
-            </div>
+        <div class="song-list">
+          <img src="assets/img/song.png" alt="Song Cover" />
+          <div class="song-info">
+            <h3 class="song-title">Song Title</h3>
+            <p class="artist-name">Artist Name</p>
+            <p class="album-name">Album Name</p>
+            <p class="song-duration">0:00</p>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  </div>
-</div>
+    <footer>Arianna's Playlist Website! 2025.</footer>
 
-    <footer>
-        <!-- Your footer content here -->
-    </footer>
     <script src="data/data.js"></script>
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
