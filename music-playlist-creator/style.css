@@ -1,6 +1,65 @@
 body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f8f8f8;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #5f725d;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+header,
+footer {
+  background: #4f473b;
+  text-align: center;
+  padding: 1em;
+  color:#EDE8D0;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.playlist-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  max-width: 1100px;
+  width: 100%;
+  padding: 20px;
+}
+
+.playlist-card {
+  background: #EDE8D0;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 18%;
+  text-align: center;
+  padding: 12px;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: #EDE8D0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #fff;
+  color: #333;
+  padding: 20px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 90%;
+  overflow-y: auto;
+  border-radius: 8px;
 }
