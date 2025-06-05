@@ -67,7 +67,6 @@ img {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  /* Alternative to line-clamp for multi-line truncation */
   max-height: 2.4em; /* Approximately 2 lines of text */
   line-height: 1.2;
 }
@@ -132,6 +131,25 @@ img {
 .playlist-info {
   display: flex;
   flex-direction: column;
+}
+
+/* Shuffle button styles */
+#shuffle-button {
+  background-color: #4f473b;
+  color: #ede8d0;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  margin-top: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 0.85em;
+  transition: background-color 0.3s ease;
+  width: fit-content;
+}
+
+#shuffle-button:hover {
+  background-color: #5f725d;
 }
 
 /* Song list entries */

@@ -11,6 +11,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const modalCreator = document.querySelector(".modal-content .playlist-info .playlist-creator");
   const modalImage = document.querySelector(".modal-content .playlist-header img");
   const modalSongsList = document.getElementById("song-container");
+  const shuffleBtn = document.getElementById("shuffle-button");
+
+  // Variable to keep track of the currently displayed playlist
+  let currentPlaylistID = null;
 
   // Clear container and populate playlists dynamically
   container.innerHTML = "";
@@ -57,6 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const card = e.target.closest('.playlist-card');
     if (card) {
       const playlistID = parseInt(card.dataset.id, 10);
+      currentPlaylistID = playlistID; // Store the current playlist ID
       const playlist = playlists.find(p => p.playlistID === playlistID);
 
       if (playlist) {
@@ -91,14 +96,64 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // Function to shuffle an array (Fisher-Yates algorithm)
+  function shuffleArray(array) {
+    const newArray = [...array]; // Create a copy of the array
+    for (let i = newArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [newArray[i], newArray[j]] = [newArray[j], newArray[i]]; // Swap elements
+    }
+    return newArray;
+  }
+
+  // Function to update the songs display in the modal
+  function updateSongsDisplay(songs) {
+    // Clear old songs
+    modalSongsList.innerHTML = "";
+
+    // Add songs to modal
+    songs.slice(0, 6).forEach(song => {
+      const songDiv = document.createElement("div");
+      songDiv.className = "song-list";
+      songDiv.innerHTML = `
+        <img src="${song.imageUrl}" alt="Cover art for ${song.title}" />
+        <div class="song-info">
+          <h3 class="song-title">${song.title}</h3>
+          <p class="artist-name">${song.artist}</p>
+          <p class="album-name">${song.album}</p>
+          <p class="song-duration">${song.duration}</p>
+        </div>
+      `;
+      modalSongsList.appendChild(songDiv);
+    });
+  }
+
+  // Shuffle button event listener
+  shuffleBtn.addEventListener("click", () => {
+    if (currentPlaylistID !== null) {
+      // Find the current playlist
+      const playlistIndex = playlists.findIndex(p => p.playlistID === currentPlaylistID);
+
+      if (playlistIndex !== -1) {
+        // Shuffle the songs array
+        playlists[playlistIndex].songs = shuffleArray(playlists[playlistIndex].songs);
+
+        // Update the display
+        updateSongsDisplay(playlists[playlistIndex].songs);
+      }
+    }
+  });
+
   // Close modal logic
   closeBtn.addEventListener("click", () => {
     modal.classList.remove("show");
+    currentPlaylistID = null; // Reset current playlist ID when modal is closed
   });
 
   modal.addEventListener("click", (e) => {
     if (e.target === modal) {
       modal.classList.remove("show");
+      currentPlaylistID = null; // Reset current playlist ID when modal is closed
     }
   });
 });
