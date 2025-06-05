@@ -1,11 +1,20 @@
+
+// Main script for Music Playlist Explorer
+console.log("Script loaded and running!");
 document.addEventListener("DOMContentLoaded", () => {
+  console.log("DOM fully loaded");
+  console.log("Playlists data:", playlists);
   const container = document.querySelector(".playlist-container");
   const modal = document.getElementById("modal");
   const closeBtn = document.querySelector(".close");
+  const modalTitle = document.querySelector(".modal-content .playlist-info .playlist-title");
+  const modalCreator = document.querySelector(".modal-content .playlist-info .playlist-creator");
+  const modalImage = document.querySelector(".modal-content .playlist-header img");
+  const modalSongsList = document.getElementById("song-container");
 
   // Clear container and populate playlists dynamically
   container.innerHTML = "";
-  if (playlists.length === 0) {
+  if (playlists && playlists.length === 0) {
     const noDataMsg = document.createElement("p");
     noDataMsg.textContent = "No playlists added.";
     noDataMsg.className = "no-data";
@@ -13,16 +22,18 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
+  // Create playlist cards
   playlists.forEach(playlist => {
     const card = document.createElement("article");
     card.className = "playlist-card";
+    card.dataset.id = playlist.playlistID; // store ID for later reference
 
     card.innerHTML = `
-      <img src="${playlist.playlist_art}" alt="Cover art for ${playlist.playlist_name}" />
+      <img class="playlist-img" src="${playlist.playlist_art}" alt="${playlist.playlist_alt}" />
       <h2 class="playlist-title">${playlist.playlist_name}</h2>
       <p class="creator-name">${playlist.playlist_author}</p>
       <p class="like-section">
-        <span class="like-count">${playlist.like_count}</span> Likes
+        <span class="like-count">${playlist.like_count}</span>&nbsp;Likes
         <span class="heart-icon" style="cursor:pointer; color:black; margin-left:8px; font-size:1.2em;">&#10084;</span>
       </p>
     `;
@@ -30,40 +41,64 @@ document.addEventListener("DOMContentLoaded", () => {
     container.appendChild(card);
   });
 
-  // Event delegation for heart icon toggling and modal opening
+  // Event delegation for heart icon toggle and modal open
   container.addEventListener('click', (e) => {
     const heart = e.target.closest('.heart-icon');
     if (heart) {
-      // Click was on heart icon: toggle like and color
       const countSpan = heart.previousElementSibling;
       let count = parseInt(countSpan.textContent, 10);
       const liked = heart.classList.toggle('liked');
       countSpan.textContent = liked ? count + 1 : count - 1;
       heart.style.color = liked ? 'red' : 'black';
-
-      
       e.stopPropagation();
       return;
     }
 
-    // If click was NOT on heart, check if it was on a playlist card (or child)
     const card = e.target.closest('.playlist-card');
     if (card) {
-      // Open modal
-      modal.classList.add('show');
-      // You can add code here to fill modal content based on clicked playlist if needed
+      const playlistID = parseInt(card.dataset.id, 10);
+      const playlist = playlists.find(p => p.playlistID === playlistID);
+
+      if (playlist) {
+        // Update modal header with playlist info
+        modalTitle.textContent = playlist.playlist_name;
+        modalCreator.textContent = playlist.playlist_author;
+        modalImage.src = playlist.playlist_art;
+        modalImage.alt = playlist.playlist_alt;
+
+        // Clear old songs
+        modalSongsList.innerHTML = "";
+
+        // Add songs to modal
+        playlist.songs.slice(0, 6).forEach(song => {
+          const songDiv = document.createElement("div");
+          songDiv.className = "song-list";
+          songDiv.innerHTML = `
+            <img src="${song.imageUrl}" alt="Cover art for ${song.title}" />
+            <div class="song-info">
+              <h3 class="song-title">${song.title}</h3>
+              <p class="artist-name">${song.artist}</p>
+              <p class="album-name">${song.album}</p>
+              <p class="song-duration">${song.duration}</p>
+            </div>
+          `;
+          modalSongsList.appendChild(songDiv);
+        });
+
+        // Show modal
+        modal.classList.add("show");
+      }
     }
   });
 
-  // Close button closes modal
-  closeBtn.addEventListener('click', () => {
-    modal.classList.remove('show');
+  // Close modal logic
+  closeBtn.addEventListener("click", () => {
+    modal.classList.remove("show");
   });
 
-  // Clicking outside modal-content closes modal
-  modal.addEventListener('click', (e) => {
+  modal.addEventListener("click", (e) => {
     if (e.target === modal) {
-      modal.classList.remove('show');
+      modal.classList.remove("show");
     }
   });
 });
