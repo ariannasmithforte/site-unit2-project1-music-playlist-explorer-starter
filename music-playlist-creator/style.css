@@ -55,6 +55,7 @@ img {
   width: 18%;
   text-align: center;
   padding: 12px;
+  
 }
 
 /* Modal Styles */
@@ -80,6 +81,9 @@ img {
   color: #333;
 }
 
+.modal-overlay.show {
+  display: flex;
+}
 /* Playlist header inside modal */
 .playlist-header {
   display: flex;
@@ -133,4 +137,13 @@ img {
   font-weight: bold;
   position: relative;
   top: -35px;
+}
+
+.like-icon {
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+  margin-right: 6px;
+  color:black
+
 }
