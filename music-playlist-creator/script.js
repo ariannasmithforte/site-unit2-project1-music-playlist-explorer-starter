@@ -185,7 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
     modalSongsList.innerHTML = "";
 
     // Add songs to modal
-    songs.slice(0, 6).forEach((song) => {
+    songs.slice(0, songs.length).forEach((song) => {
       const songDiv = document.createElement("div");
       songDiv.className = "song-list";
       songDiv.innerHTML = `

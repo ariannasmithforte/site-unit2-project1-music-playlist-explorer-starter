@@ -164,7 +164,7 @@ const playlists = [
     playlist_author: "DeShawn King",
     playlist_art: "assets/img/rap.jpg",
     playlist_alt: "Two rappers mid-battle on stage in front of a crowd",
-    like_count: 245,
+    like_count: 0,
     like_icon: "assets/img/heart.png",
     songs: [
       {
