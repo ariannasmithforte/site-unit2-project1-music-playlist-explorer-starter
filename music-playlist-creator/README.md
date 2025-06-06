@@ -149,15 +149,15 @@ Deployed Application (**required**): [Music Playlist Explorer Deployed Site](ADD
 
 - Did the topics discussed in your labs prepare you to complete the assignment? Be specific, which features in your weekly assignment did you feel unprepared to complete?
 
-Add your response here
+I think the topics discussed did help prepare me for the assignment, on the other hand, to complete the assignment, I think not. I feel like we rush through the content towards the end, which leaves the basics covered but the fundumentals left behind. I felt unprepared to completed Labs 3 + 4, due to the fast-pasted nature of the class.
 
 - If you had more time, what would you have done differently? Would you have added additional features? Changed the way your project responded to a particular event, etc.
 
-Add your response here
+If I had more time, I would have done a lot differently. Most specifically, I would have finished the additional features like adding a playlist or sorting from playlists. I also think I would have tried to be more creative with the CSS side of things and created a more appealing website.
 
 - Reflect on your project demo, what went well? Were there things that maybe didn't go as planned? Did you notice something that your peer did that you would like to try next time?
 
-Add your response here
+Some things that went well is that most of my code is working right. Some things that didn't go well is that I found some bugs in my code that I has to change last minute, for example, my edit playlist changes were not saving and after I edited the playlist, the modal would not open. Something that I noticed that my peers did was use piscum and other random photo generators to take some time of their project, next time I would do that.
 
 ### Open-source libraries used
 
@@ -165,4 +165,4 @@ Add your response here
 
 ### Shout out
 
-Give a shout out to somebody from your cohort that especially helped you during your project. This can be a fellow peer, instructor, TA, mentor, etc.
+Shout out to the staff in my class for their help in the class with the lab assignments and the project, and to my fellow peers for their advice and company during this time.
