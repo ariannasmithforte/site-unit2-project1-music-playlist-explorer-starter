@@ -38,7 +38,6 @@ main {
   align-items: center;
 }
 
-
 img {
   border-radius: 8px;
   width: 100%;
@@ -48,7 +47,6 @@ img {
   object-fit: cover;
   display: block;
 }
-
 
 /* Playlist Cards */
 .playlist-container {
@@ -219,8 +217,8 @@ img {
   transition: color 0.3s ease;
 }
 
-.heart-icon.liked{
-  color:red;
+.heart-icon.liked {
+  color: red;
 }
 
 /* Delete button styles */

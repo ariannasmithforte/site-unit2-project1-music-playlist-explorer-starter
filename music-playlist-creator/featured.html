@@ -1,118 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Featured Playlist - Music Playlist Explorer</title>
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
     <link rel="stylesheet" href="style.css" />
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <div class="header-content">
-            <h1>Featured Playlist</h1>
-            <div class="header-right">
-                <nav class="main-nav">
-                    <ul>
-                        <li><a href="index.html">All Playlists</a></li>
-                        <li><a href="featured.html" class="active">Featured</a></li>
-                    </ul>
-                </nav>
-                <div class="search-container">
-                    <input type="text" id="search-input" placeholder="Search playlists...">
-                </div>
-            </div>
+      <div class="header-content">
+        <h1>Featured Playlist</h1>
+        <div class="header-right">
+          <nav class="main-nav">
+            <ul>
+              <li><a href="index.html">All Playlists</a></li>
+              <li><a href="featured.html" class="active">Featured</a></li>
+            </ul>
+          </nav>
+          <div class="search-container">
+            <input
+              type="text"
+              id="search-input"
+              placeholder="Search playlists..."
+            />
+          </div>
         </div>
+      </div>
     </header>
 
     <main>
-        <div class="featured-container">
-            <div class="featured-image-section">
-                <img src="assets/img/broadway.jpg" alt="A vibrant photo of a NYC Broadway theater district at night" class="featured-image">
-                <h2 class="featured-title">Broadway Belts & Ballads</h2>
-                <p class="featured-creator">Created by Jamie Lin</p>
-                <p class="featured-likes"><span class="like-count">153</span>&nbsp;Likes
-                    <span class="heart-icon" style="cursor:pointer; color:black; margin-left:8px; font-size:1.2em;">&#10084;</span>
-                </p>
-            </div>
-
-
-            <div class="featured-songs-section">
-                <h3>Songs</h3>
-                <div class="featured-songs-list">
-
-                    <div class="song-list">
-                        <img src="assets/img/satisfied.jpg" alt="Cover art for Satisfied">
-                        <div class="song-info">
-                            <h3 class="song-title">Satisfied</h3>
-                            <p class="artist-name">Hamilton Cast</p>
-                            <p class="album-name">Hamilton</p>
-                            <p class="song-duration">5:27</p>
-                        </div>
-                    </div>
-
-
-                    <div class="song-list">
-                        <img src="assets/img/defying.jpg" alt="Cover art for Defying Gravity">
-                        <div class="song-info">
-                            <h3 class="song-title">Defying Gravity</h3>
-                            <p class="artist-name">Idina Menzel</p>
-                            <p class="album-name">Wicked</p>
-                            <p class="song-duration">3:54</p>
-                        </div>
-                    </div>
-
-
-                    <div class="song-list">
-                        <img src="assets/img/window.jpg" alt="Cover art for Waving Through a Window">
-                        <div class="song-info">
-                            <h3 class="song-title">Waving Through a Window</h3>
-                            <p class="artist-name">Ben Platt</p>
-                            <p class="album-name">Dear Evan Hansen</p>
-                            <p class="song-duration">4:09</p>
-                        </div>
-                    </div>
-
-
-                    <div class="song-list">
-                        <img src="assets/img/cornerofthesky.jpg" alt="Cover art for Corner of the Sky">
-                        <div class="song-info">
-                            <h3 class="song-title">Corner of the Sky</h3>
-                            <p class="artist-name">Stephen Schwartz</p>
-                            <p class="album-name">Pippin (New Broadway Cast)</p>
-                            <p class="song-duration">3:04</p>
-                        </div>
-                    </div>
-
-
-                    <div class="song-list">
-                        <img src="assets/img/journeytothepast.jpg" alt="Cover art for Journey to the Past">
-                        <div class="song-info">
-                            <h3 class="song-title">Journey to the Past</h3>
-                            <p class="artist-name">Christy Altomare</p>
-                            <p class="album-name">Anastasia (Original Broadway Cast)</p>
-                            <p class="song-duration">3:35</p>
-                        </div>
-                    </div>
-
-
-                    <div class="song-list">
-                        <img src="assets/img/worldburn.jpg" alt="Cover art for World Burn">
-                        <div class="song-info">
-                            <h3 class="song-title">World Burn</h3>
-                            <p class="artist-name">Taylor Louderman</p>
-                            <p class="album-name">Mean Girls (Original Broadway Cast)</p>
-                            <p class="song-duration">3:23</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div class="featured-container">
+        <div class="featured-image-section">
+          <img
+            src="assets/img/broadway.jpg"
+            alt="A vibrant photo of a NYC Broadway theater district at night"
+            class="featured-image"
+          />
+          <h2 class="featured-title">Broadway Belts & Ballads</h2>
+          <p class="featured-creator">Created by Jamie Lin</p>
+          <p class="featured-likes">
+            <span class="like-count">153</span>&nbsp;Likes
+            <span
+              class="heart-icon"
+              style="
+                cursor: pointer;
+                color: black;
+                margin-left: 8px;
+                font-size: 1.2em;
+              "
+              >&#10084;</span
+            >
+          </p>
         </div>
+
+        <div class="featured-songs-section">
+          <h3>Songs</h3>
+          <div class="featured-songs-list">
+            <div class="song-list">
+              <img
+                src="assets/img/satisfied.jpg"
+                alt="Cover art for Satisfied"
+              />
+              <div class="song-info">
+                <h3 class="song-title">Satisfied</h3>
+                <p class="artist-name">Hamilton Cast</p>
+                <p class="album-name">Hamilton</p>
+                <p class="song-duration">5:27</p>
+              </div>
+            </div>
+
+            <div class="song-list">
+              <img
+                src="assets/img/defying.jpg"
+                alt="Cover art for Defying Gravity"
+              />
+              <div class="song-info">
+                <h3 class="song-title">Defying Gravity</h3>
+                <p class="artist-name">Idina Menzel</p>
+                <p class="album-name">Wicked</p>
+                <p class="song-duration">3:54</p>
+              </div>
+            </div>
+
+            <div class="song-list">
+              <img
+                src="assets/img/window.jpg"
+                alt="Cover art for Waving Through a Window"
+              />
+              <div class="song-info">
+                <h3 class="song-title">Waving Through a Window</h3>
+                <p class="artist-name">Ben Platt</p>
+                <p class="album-name">Dear Evan Hansen</p>
+                <p class="song-duration">4:09</p>
+              </div>
+            </div>
+
+            <div class="song-list">
+              <img
+                src="assets/img/cornerofthesky.jpg"
+                alt="Cover art for Corner of the Sky"
+              />
+              <div class="song-info">
+                <h3 class="song-title">Corner of the Sky</h3>
+                <p class="artist-name">Stephen Schwartz</p>
+                <p class="album-name">Pippin (New Broadway Cast)</p>
+                <p class="song-duration">3:04</p>
+              </div>
+            </div>
+
+            <div class="song-list">
+              <img
+                src="assets/img/journeytothepast.jpg"
+                alt="Cover art for Journey to the Past"
+              />
+              <div class="song-info">
+                <h3 class="song-title">Journey to the Past</h3>
+                <p class="artist-name">Christy Altomare</p>
+                <p class="album-name">Anastasia (Original Broadway Cast)</p>
+                <p class="song-duration">3:35</p>
+              </div>
+            </div>
+
+            <div class="song-list">
+              <img
+                src="assets/img/worldburn.jpg"
+                alt="Cover art for World Burn"
+              />
+              <div class="song-info">
+                <h3 class="song-title">World Burn</h3>
+                <p class="artist-name">Taylor Louderman</p>
+                <p class="album-name">Mean Girls (Original Broadway Cast)</p>
+                <p class="song-duration">3:23</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
 
     <footer>Arianna's Playlist Website! 2025.</footer>
 
     <script src="data/data.js"></script>
     <script src="script.js"></script>
-</body>
+  </body>
 </html>

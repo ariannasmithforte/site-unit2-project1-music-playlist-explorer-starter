@@ -1,4 +1,3 @@
-
 // Main script for Music Playlist Explorer
 console.log("Script loaded and running!");
 document.addEventListener("DOMContentLoaded", () => {
@@ -7,9 +6,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const container = document.querySelector(".playlist-container");
   const modal = document.getElementById("modal");
   const closeBtn = document.querySelector(".close");
-  const modalTitle = document.querySelector(".modal-content .playlist-info .playlist-title");
-  const modalCreator = document.querySelector(".modal-content .playlist-info .playlist-creator");
-  const modalImage = document.querySelector(".modal-content .playlist-header img");
+  const modalTitle = document.querySelector(
+    ".modal-content .playlist-info .playlist-title"
+  );
+  const modalCreator = document.querySelector(
+    ".modal-content .playlist-info .playlist-creator"
+  );
+  const modalImage = document.querySelector(
+    ".modal-content .playlist-header img"
+  );
   const modalSongsList = document.getElementById("song-container");
   const shuffleBtn = document.getElementById("shuffle-button");
   const searchInput = document.getElementById("search-input");
@@ -35,17 +40,21 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
 
     // Add event listener for delete button
-    const deleteBtn = card.querySelector('.delete-btn');
-    deleteBtn.addEventListener('click', (e) => {
+    const deleteBtn = card.querySelector(".delete-btn");
+    deleteBtn.addEventListener("click", (e) => {
       e.stopPropagation(); // Prevent opening the modal when clicking delete
 
       // Get playlist ID
       const playlistID = parseInt(card.dataset.id, 10);
 
       // Confirm deletion
-      if (confirm(`Are you sure you want to delete "${playlist.playlist_name}"?`)) {
+      if (
+        confirm(`Are you sure you want to delete "${playlist.playlist_name}"?`)
+      ) {
         // Find playlist index
-        const playlistIndex = playlists.findIndex(p => p.playlistID === playlistID);
+        const playlistIndex = playlists.findIndex(
+          (p) => p.playlistID === playlistID
+        );
 
         if (playlistIndex !== -1) {
           // Remove playlist from array
@@ -74,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Create and append playlist cards
-    playlistsToDisplay.forEach(playlist => {
+    playlistsToDisplay.forEach((playlist) => {
       const card = createPlaylistCard(playlist);
       container.appendChild(card);
     });
@@ -99,9 +108,10 @@ document.addEventListener("DOMContentLoaded", () => {
       displayPlaylists(playlists);
     } else {
       // Filter playlists based on search term
-      const filteredPlaylists = playlists.filter(playlist =>
-        playlist.playlist_name.toLowerCase().includes(searchTerm) ||
-        playlist.playlist_author.toLowerCase().includes(searchTerm)
+      const filteredPlaylists = playlists.filter(
+        (playlist) =>
+          playlist.playlist_name.toLowerCase().includes(searchTerm) ||
+          playlist.playlist_author.toLowerCase().includes(searchTerm)
       );
 
       displayPlaylists(filteredPlaylists);
@@ -109,23 +119,23 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Event delegation for heart icon toggle and modal open
-  container.addEventListener('click', (e) => {
-    const heart = e.target.closest('.heart-icon');
+  container.addEventListener("click", (e) => {
+    const heart = e.target.closest(".heart-icon");
     if (heart) {
       const countSpan = heart.previousElementSibling;
       let count = parseInt(countSpan.textContent, 10);
-      const liked = heart.classList.toggle('liked');
+      const liked = heart.classList.toggle("liked");
       countSpan.textContent = liked ? count + 1 : count - 1;
-      heart.style.color = liked ? 'red' : 'black';
+      heart.style.color = liked ? "red" : "black";
       e.stopPropagation();
       return;
     }
 
-    const card = e.target.closest('.playlist-card');
+    const card = e.target.closest(".playlist-card");
     if (card) {
       const playlistID = parseInt(card.dataset.id, 10);
       currentPlaylistID = playlistID; // Store the current playlist ID
-      const playlist = playlists.find(p => p.playlistID === playlistID);
+      const playlist = playlists.find((p) => p.playlistID === playlistID);
 
       if (playlist) {
         // Update modal header with playlist info
@@ -138,7 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
         modalSongsList.innerHTML = "";
 
         // Add songs to modal
-        playlist.songs.slice(0, 6).forEach(song => {
+        playlist.songs.slice(0, 6).forEach((song) => {
           const songDiv = document.createElement("div");
           songDiv.className = "song-list";
           songDiv.innerHTML = `
@@ -175,7 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
     modalSongsList.innerHTML = "";
 
     // Add songs to modal
-    songs.slice(0, 6).forEach(song => {
+    songs.slice(0, 6).forEach((song) => {
       const songDiv = document.createElement("div");
       songDiv.className = "song-list";
       songDiv.innerHTML = `
@@ -195,11 +205,15 @@ document.addEventListener("DOMContentLoaded", () => {
   shuffleBtn.addEventListener("click", () => {
     if (currentPlaylistID !== null) {
       // Find the current playlist
-      const playlistIndex = playlists.findIndex(p => p.playlistID === currentPlaylistID);
+      const playlistIndex = playlists.findIndex(
+        (p) => p.playlistID === currentPlaylistID
+      );
 
       if (playlistIndex !== -1) {
         // Shuffle the songs array
-        playlists[playlistIndex].songs = shuffleArray(playlists[playlistIndex].songs);
+        playlists[playlistIndex].songs = shuffleArray(
+          playlists[playlistIndex].songs
+        );
 
         // Update the display
         updateSongsDisplay(playlists[playlistIndex].songs);
