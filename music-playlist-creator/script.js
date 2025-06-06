@@ -12,27 +12,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const modalImage = document.querySelector(".modal-content .playlist-header img");
   const modalSongsList = document.getElementById("song-container");
   const shuffleBtn = document.getElementById("shuffle-button");
+  const searchInput = document.getElementById("search-input");
 
   // Variable to keep track of the currently displayed playlist
   let currentPlaylistID = null;
 
-  // Clear container and populate playlists dynamically
-  container.innerHTML = "";
-  if (playlists && playlists.length === 0) {
-    const noDataMsg = document.createElement("p");
-    noDataMsg.textContent = "No playlists added.";
-    noDataMsg.className = "no-data";
-    container.appendChild(noDataMsg);
-    return;
-  }
-
-  // Create playlist cards
-  playlists.forEach(playlist => {
+  // Function to create a playlist card
+  function createPlaylistCard(playlist) {
     const card = document.createElement("article");
     card.className = "playlist-card";
     card.dataset.id = playlist.playlistID; // store ID for later reference
 
     card.innerHTML = `
+      <button class="delete-btn" title="Delete playlist">×</button>
       <img class="playlist-img" src="${playlist.playlist_art}" alt="${playlist.playlist_alt}" />
       <h2 class="playlist-title">${playlist.playlist_name}</h2>
       <p class="creator-name">${playlist.playlist_author}</p>
@@ -42,7 +34,78 @@ document.addEventListener("DOMContentLoaded", () => {
       </p>
     `;
 
-    container.appendChild(card);
+    // Add event listener for delete button
+    const deleteBtn = card.querySelector('.delete-btn');
+    deleteBtn.addEventListener('click', (e) => {
+      e.stopPropagation(); // Prevent opening the modal when clicking delete
+
+      // Get playlist ID
+      const playlistID = parseInt(card.dataset.id, 10);
+
+      // Confirm deletion
+      if (confirm(`Are you sure you want to delete "${playlist.playlist_name}"?`)) {
+        // Find playlist index
+        const playlistIndex = playlists.findIndex(p => p.playlistID === playlistID);
+
+        if (playlistIndex !== -1) {
+          // Remove playlist from array
+          playlists.splice(playlistIndex, 1);
+
+          // Update display
+          displayPlaylists(playlists);
+        }
+      }
+    });
+
+    return card;
+  }
+
+  // Function to display playlists
+  function displayPlaylists(playlistsToDisplay) {
+    // Clear container
+    container.innerHTML = "";
+
+    if (playlistsToDisplay.length === 0) {
+      const noResultsMsg = document.createElement("p");
+      noResultsMsg.textContent = "No playlists match your search.";
+      noResultsMsg.className = "no-results";
+      container.appendChild(noResultsMsg);
+      return;
+    }
+
+    // Create and append playlist cards
+    playlistsToDisplay.forEach(playlist => {
+      const card = createPlaylistCard(playlist);
+      container.appendChild(card);
+    });
+  }
+
+  // Initial display of all playlists
+  if (playlists && playlists.length === 0) {
+    const noDataMsg = document.createElement("p");
+    noDataMsg.textContent = "No playlists added.";
+    noDataMsg.className = "no-data";
+    container.appendChild(noDataMsg);
+  } else {
+    displayPlaylists(playlists);
+  }
+
+  // Search functionality
+  searchInput.addEventListener("input", () => {
+    const searchTerm = searchInput.value.toLowerCase().trim();
+
+    if (searchTerm === "") {
+      // If search is empty, show all playlists
+      displayPlaylists(playlists);
+    } else {
+      // Filter playlists based on search term
+      const filteredPlaylists = playlists.filter(playlist =>
+        playlist.playlist_name.toLowerCase().includes(searchTerm) ||
+        playlist.playlist_author.toLowerCase().includes(searchTerm)
+      );
+
+      displayPlaylists(filteredPlaylists);
+    }
   });
 
   // Event delegation for heart icon toggle and modal open
@@ -96,7 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Function to shuffle an array (Fisher-Yates algorithm)
+  // Function to shuffle an array
   function shuffleArray(array) {
     const newArray = [...array]; // Create a copy of the array
     for (let i = newArray.length - 1; i > 0; i--) {

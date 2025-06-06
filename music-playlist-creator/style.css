@@ -12,9 +12,23 @@ body {
 header,
 footer {
   background: #4f473b;
-  text-align: center;
   padding: 1em;
   color: #ede8d0;
+}
+
+/* Header layout */
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
 main {
@@ -30,7 +44,7 @@ img {
   width: 100%;
   max-width: 200px;
   height: auto;
-  aspect-ratio: 1 / 1; /* keeps square shape */
+  aspect-ratio: 1 / 1;
   object-fit: cover;
   display: block;
 }
@@ -61,13 +75,13 @@ img {
 
 /* Fixed heights for playlist card elements */
 .playlist-card .playlist-title {
-  height: 50px; /* Fixed height for playlist title */
+  height: 50px;
   margin: 10px 0;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  max-height: 2.4em; /* Approximately 2 lines of text */
+  max-height: 2.4em;
   line-height: 1.2;
 }
 
@@ -101,7 +115,7 @@ img {
 }
 
 .modal-content {
-  background: #ede8d0; /* Cream modal */
+  background: #ede8d0;
   padding: 2rem;
   border-radius: 12px;
   max-width: 700px;
@@ -166,10 +180,10 @@ img {
 
 /* Song container with scrolling */
 #song-container {
-  height: 450px; /* Increased height to fit at least three songs */
-  overflow-y: auto; /* Enable vertical scrolling */
-  padding-right: 5px; /* Add some padding for the scrollbar */
-  margin-top: 20px; /* Add some space between the playlist header and songs */
+  height: 450px;
+  overflow-y: auto;
+  padding-right: 5px;
+  margin-top: 20px;
 }
 
 .song-list img {
@@ -207,6 +221,39 @@ img {
 
 .heart-icon.liked{
   color:red;
+}
+
+/* Delete button styles */
+.delete-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #a83232;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.playlist-card {
+  position: relative;
+}
+
+.playlist-card:hover .delete-btn {
+  opacity: 1;
+}
+
+.delete-btn:hover {
+  background-color: #c04040;
 }
 
 /* Featured Page Styles */
@@ -274,9 +321,48 @@ img {
   overflow-y: auto;
 }
 
+/* Search bar styles */
+.search-container {
+  display: flex;
+  justify-content: center;
+}
+
+#search-input {
+  width: 200px;
+  padding: 8px 12px;
+  border: 2px solid #ede8d0;
+  border-radius: 25px;
+  background-color: #ede8d0;
+  color: #4f473b;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+#search-input:focus {
+  box-shadow: 0 0 5px rgba(237, 232, 208, 0.5);
+}
+
+#search-input::placeholder {
+  color: #8a8a8a;
+  opacity: 0.7;
+}
+
+/* No results message */
+.no-results {
+  text-align: center;
+  padding: 20px;
+  font-size: 18px;
+  color: #ede8d0;
+  background-color: #4f473b;
+  border-radius: 8px;
+  margin: 20px auto;
+  max-width: 500px;
+}
+
 /* Main Navigation styles */
 .main-nav {
-  margin-top: 10px;
+  margin: 0;
 }
 
 .main-nav ul {
@@ -284,8 +370,7 @@ img {
   padding: 0;
   margin: 0;
   display: flex;
-  justify-content: center;
-  gap: 20px;
+  gap: 10px;
 }
 
 .main-nav li {
@@ -295,11 +380,12 @@ img {
 .main-nav a {
   color: #ede8d0;
   text-decoration: none;
-  padding: 8px 15px;
+  padding: 6px 12px;
   border: 1px solid #ede8d0;
   border-radius: 5px;
   transition: all 0.3s ease;
   display: block;
+  font-size: 14px;
 }
 
 .main-nav a:hover {
