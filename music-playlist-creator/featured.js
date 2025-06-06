@@ -2,6 +2,11 @@
 document.addEventListener("DOMContentLoaded", () => {
   console.log("Featured page loaded");
 
+  // Get references to search and clear buttons
+  const searchInput = document.getElementById("search-input");
+  const searchButton = document.getElementById("search-button");
+  const clearButton = document.getElementById("clear-button");
+
   // Function to select a random playlist
   function getRandomPlaylist() {
     // Get a random index between 0 and playlists.length-1
@@ -18,8 +23,11 @@ document.addEventListener("DOMContentLoaded", () => {
     // Update the featured playlist information
     document.querySelector(".featured-image").src = randomPlaylist.playlist_art;
     document.querySelector(".featured-image").alt = randomPlaylist.playlist_alt;
-    document.querySelector(".featured-title").textContent = randomPlaylist.playlist_name;
-    document.querySelector(".featured-creator").textContent = `Created by ${randomPlaylist.playlist_author}`;
+    document.querySelector(".featured-title").textContent =
+      randomPlaylist.playlist_name;
+    document.querySelector(
+      ".featured-creator"
+    ).textContent = `Created by ${randomPlaylist.playlist_author}`;
 
     // Update the like count
     const likeCountElement = document.querySelector(".like-count");
@@ -30,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
     songsListContainer.innerHTML = "";
 
     // Add the songs from the random playlist (up to 6 songs)
-    randomPlaylist.songs.slice(0, 6).forEach(song => {
+    randomPlaylist.songs.slice(0, 6).forEach((song) => {
       const songDiv = document.createElement("div");
       songDiv.className = "song-list";
       songDiv.innerHTML = `
@@ -54,6 +62,35 @@ document.addEventListener("DOMContentLoaded", () => {
       heartIcon.style.color = liked ? "red" : "black";
     });
   }
+
+  // Function to perform search - redirects to index.html with search query
+  function performSearch() {
+    const searchTerm = searchInput.value.toLowerCase().trim();
+    if (searchTerm !== "") {
+      // Redirect to index.html with search query as URL parameter
+      window.location.href = `index.html?search=${encodeURIComponent(
+        searchTerm
+      )}`;
+    }
+  }
+
+  // Function to clear search
+  function clearSearch() {
+    searchInput.value = ""; // Clear the input field
+  }
+
+  // Search button click event
+  searchButton.addEventListener("click", performSearch);
+
+  // Clear button click event
+  clearButton.addEventListener("click", clearSearch);
+
+  // Enter key press in search input
+  searchInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      performSearch();
+    }
+  });
 
   // Update the featured playlist when the page loads
   updateFeaturedPlaylist();

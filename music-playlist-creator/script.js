@@ -5,7 +5,9 @@ document.addEventListener("DOMContentLoaded", () => {
   console.log("Playlists data:", playlists);
   const container = document.querySelector(".playlist-container");
   const modal = document.getElementById("modal");
+  const editModal = document.getElementById("edit-modal");
   const closeBtn = document.querySelector(".close");
+  const editCloseBtn = document.getElementById("edit-close");
   const modalTitle = document.querySelector(
     ".modal-content .playlist-info .playlist-title"
   );
@@ -18,9 +20,24 @@ document.addEventListener("DOMContentLoaded", () => {
   const modalSongsList = document.getElementById("song-container");
   const shuffleBtn = document.getElementById("shuffle-button");
   const searchInput = document.getElementById("search-input");
+  const editPlaylistName = document.getElementById("edit-playlist-name");
+  const editPlaylistAuthor = document.getElementById("edit-playlist-author");
+  const editSongsContainer = document.getElementById("edit-songs-container");
+  const exitEditBtn = document.getElementById("exit-edit-btn");
 
-  // Variable to keep track of the currently displayed playlist
+  // Check for search query parameter in URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const searchQuery = urlParams.get("search");
+  if (searchQuery) {
+    // Set the search input value to the query parameter
+    searchInput.value = searchQuery;
+    // Perform search immeßiately
+    setTimeout(() => performSearch(), 100);
+  }
+
+  // Variables to keep track of the currently displayed/edited playlist
   let currentPlaylistID = null;
+  let editingPlaylistID = null;
 
   // Function to create a playlist card
   function createPlaylistCard(playlist) {
@@ -29,7 +46,10 @@ document.addEventListener("DOMContentLoaded", () => {
     card.dataset.id = playlist.playlistID; // store ID for later reference
 
     card.innerHTML = `
-      <button class="delete-btn" title="Delete playlist">×</button>
+      <div class="card-buttons">
+        <button class="delete-btn" title="Delete playlist">×</button>
+        <button class="edit-btn" title="Edit playlist">✎</button>
+      </div>
       <img class="playlist-img" src="${playlist.playlist_art}" alt="${playlist.playlist_alt}" />
       <h2 class="playlist-title">${playlist.playlist_name}</h2>
       <p class="creator-name">${playlist.playlist_author}</p>
@@ -47,10 +67,6 @@ document.addEventListener("DOMContentLoaded", () => {
       // Get playlist ID
       const playlistID = parseInt(card.dataset.id, 10);
 
-      // Confirm deletion
-      if (
-        confirm(`Are you sure you want to delete "${playlist.playlist_name}"?`)
-      ) {
         // Find playlist index
         const playlistIndex = playlists.findIndex(
           (p) => p.playlistID === playlistID
@@ -63,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
           // Update display
           displayPlaylists(playlists);
         }
-      }
+      
     });
 
     return card;
@@ -99,8 +115,12 @@ document.addEventListener("DOMContentLoaded", () => {
     displayPlaylists(playlists);
   }
 
-  // Search functionality
-  searchInput.addEventListener("input", () => {
+  // Get references to search and clear buttons
+  const searchButton = document.getElementById("search-button");
+  const clearButton = document.getElementById("clear-button");
+
+  // Function to perform search
+  function performSearch() {
     const searchTerm = searchInput.value.toLowerCase().trim();
 
     if (searchTerm === "") {
@@ -116,9 +136,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
       displayPlaylists(filteredPlaylists);
     }
+  }
+
+  // Function to clear search
+  function clearSearch() {
+    searchInput.value = ""; // Clear the input field
+    displayPlaylists(playlists); // Display all playlists
+  }
+
+  // Search button click event
+  searchButton.addEventListener("click", performSearch);
+
+  // Clear button click event
+  clearButton.addEventListener("click", clearSearch);
+
+  // Enter key press in search input
+  searchInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      performSearch();
+    }
   });
 
-  // Event delegation for heart icon toggle and modal open
+  // Event delegation for heart icon toggle, edit button, and modal open
   container.addEventListener("click", (e) => {
     const heart = e.target.closest(".heart-icon");
     if (heart) {
@@ -128,6 +167,62 @@ document.addEventListener("DOMContentLoaded", () => {
       countSpan.textContent = liked ? count + 1 : count - 1;
       heart.style.color = liked ? "red" : "black";
       e.stopPropagation();
+      return;
+    }
+
+    const editBtn = e.target.closest(".edit-btn");
+    if (editBtn) {
+      e.stopPropagation(); // Prevent opening the modal when clicking edit
+      const card = editBtn.closest(".playlist-card");
+      const playlistID = parseInt(card.dataset.id, 10);
+      editingPlaylistID = playlistID; // Store the editing playlist ID
+      const playlist = playlists.find((p) => p.playlistID === playlistID);
+
+      if (playlist) {
+        // Populate edit form with playlist data
+        editPlaylistName.value = playlist.playlist_name;
+        editPlaylistAuthor.value = playlist.playlist_author;
+
+        // Clear old songs
+        editSongsContainer.innerHTML = "";
+
+        // Add songs to edit form
+        playlist.songs.forEach((song, index) => {
+          const songDiv = document.createElement("div");
+          songDiv.className = "edit-song-item";
+          songDiv.innerHTML = `
+            <img src="${song.imageUrl}" alt="Cover art for ${song.title}" />
+            <div class="edit-song-info">
+              <p class="edit-song-title">${song.title}</p>
+              <p class="edit-song-artist">${song.artist}</p>
+              <p class="edit-song-album">${song.album}</p>
+            </div>
+            <button class="delete-song-btn" data-index="${index}" title="Delete song">×</button>
+          `;
+          editSongsContainer.appendChild(songDiv);
+
+          // Add event listener for delete song button
+          const deleteSongBtn = songDiv.querySelector(".delete-song-btn");
+          deleteSongBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            // Remove the song from the UI
+            songDiv.remove();
+            // Save changes automatically after deleting a song
+            savePlaylistChanges();
+          });
+
+          // Prevent return key from deleting songs
+          songDiv.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              e.stopPropagation();
+            }
+          });
+        });
+
+        // Show edit modal
+        editModal.classList.add("show");
+      }
       return;
     }
 
@@ -231,6 +326,121 @@ document.addEventListener("DOMContentLoaded", () => {
     if (e.target === modal) {
       modal.classList.remove("show");
       currentPlaylistID = null; // Reset current playlist ID when modal is closed
+    }
+  });
+
+  // Close edit modal logic
+  editCloseBtn.addEventListener("click", () => {
+    editModal.classList.remove("show");
+    editingPlaylistID = null; // Reset editing playlist ID when modal is closed
+  });
+
+  editModal.addEventListener("click", (e) => {
+    if (e.target === editModal) {
+      editModal.classList.remove("show");
+      editingPlaylistID = null; // Reset editing playlist ID when modal is closed
+    }
+  });
+
+  // Function to save playlist changes
+  function savePlaylistChanges() {
+    if (editingPlaylistID !== null) {
+      // Find the playlist being edited
+      const playlistIndex = playlists.findIndex(
+        (p) => p.playlistID === editingPlaylistID
+      );
+
+      if (playlistIndex !== -1) {
+        // Get the current playlist data
+        const currentPlaylist = playlists[playlistIndex];
+
+        // Create a map of song titles to their original song objects for reference
+        const songMap = {};
+        currentPlaylist.songs.forEach((song) => {
+          songMap[song.title] = song;
+        });
+
+        // Get the remaining songs from the edit form
+        const remainingSongs = [];
+        const songItems =
+          editSongsContainer.querySelectorAll(".edit-song-item");
+
+        songItems.forEach((songItem) => {
+          const songTitle =
+            songItem.querySelector(".edit-song-title").textContent;
+          // Find the song in the original playlist by title
+          if (songMap[songTitle]) {
+            remainingSongs.push(songMap[songTitle]);
+          }
+        });
+
+        // Update playlist data
+        const updatedPlaylist = {
+          ...currentPlaylist,
+          playlist_name: editPlaylistName.value,
+          playlist_author: editPlaylistAuthor.value,
+          songs: remainingSongs,
+        };
+
+        // Replace the playlist in the array
+        playlists[playlistIndex] = updatedPlaylist;
+
+        // Update the UI
+        displayPlaylists(playlists);
+
+        // If the detail modal is open for this playlist, update it too
+        if (currentPlaylistID === editingPlaylistID) {
+          modalTitle.textContent = updatedPlaylist.playlist_name;
+          modalCreator.textContent = updatedPlaylist.playlist_author;
+
+          // Update songs in the detail modal
+          modalSongsList.innerHTML = "";
+          updatedPlaylist.songs.forEach((song) => {
+            const songDiv = document.createElement("div");
+            songDiv.className = "song-list";
+            songDiv.innerHTML = `
+              <img src="${song.imageUrl}" alt="Cover art for ${song.title}" />
+              <div class="song-info">
+                <h3 class="song-title">${song.title}</h3>
+                <p class="artist-name">${song.artist}</p>
+                <p class="album-name">${song.album}</p>
+                <p class="song-duration">${song.duration}</p>
+              </div>
+            `;
+            modalSongsList.appendChild(songDiv);
+          });
+        }
+      }
+    }
+  }
+
+  // Exit button for edit modal
+  exitEditBtn.addEventListener("click", () => {
+    savePlaylistChanges(); // Save changes before closing
+    editModal.classList.remove("show");
+    editingPlaylistID = null; // Reset editing playlist ID when modal is closed
+  });
+
+  // Close edit modal logic (now also saves changes)
+  editCloseBtn.addEventListener("click", () => {
+    savePlaylistChanges();
+    editModal.classList.remove("show");
+    editingPlaylistID = null; // Reset editing playlist ID when modal is closed
+  });
+
+  editModal.addEventListener("click", (e) => {
+    if (e.target === editModal) {
+      savePlaylistChanges();
+      editModal.classList.remove("show");
+      editingPlaylistID = null; // Reset editing playlist ID when modal is closed
+    }
+  });
+
+  // Prevent return key from deleting songs in the edit modal
+  editSongsContainer.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      e.stopPropagation();
     }
   });
 });

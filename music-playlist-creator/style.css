@@ -84,7 +84,7 @@ img {
 }
 
 .playlist-card .creator-name {
-  height: 20px; /* Fixed height for creator name */
+  height: 20px;
   margin: 5px 0;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -92,7 +92,7 @@ img {
 }
 
 .playlist-card .like-section {
-  height: 30px; /* Fixed height for like section */
+  height: 30px;
   margin: 5px 0;
   display: flex;
   align-items: center;
@@ -104,7 +104,7 @@ img {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5); /* Transparent dark overlay */
+  background: rgba(0, 0, 0, 0.5);
   justify-content: center;
   align-items: center;
   z-index: 1000;
@@ -129,14 +129,20 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
   transition: all 0.3s ease;
+  border: 2px solid #4f473b;
 }
 
 .close:hover {
   background-color: #4f473b;
   color: #ede8d0;
   transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.close:active {
+  transform: scale(0.95);
 }
 
 .modal-content {
@@ -154,6 +160,7 @@ img {
 .modal-overlay.show {
   display: flex;
 }
+
 /* Playlist header inside modal */
 .playlist-header {
   display: flex;
@@ -248,12 +255,36 @@ img {
   color: red;
 }
 
-/* Delete button styles */
-.delete-btn {
+/* Card buttons container */
+.card-buttons {
   position: absolute;
   top: 10px;
   right: 10px;
+  display: flex;
+  gap: 5px;
+}
+
+/* Delete button styles */
+.delete-btn {
   background-color: #a83232;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Edit button styles */
+.edit-btn {
+  background-color: #4f473b;
   color: #fff;
   border: none;
   border-radius: 50%;
@@ -273,12 +304,17 @@ img {
   position: relative;
 }
 
-.playlist-card:hover .delete-btn {
+.playlist-card:hover .delete-btn,
+.playlist-card:hover .edit-btn {
   opacity: 1;
 }
 
 .delete-btn:hover {
   background-color: #c04040;
+}
+
+.edit-btn:hover {
+  background-color: #635b4a;
 }
 
 /* Featured Page Styles */
@@ -350,6 +386,8 @@ img {
 .search-container {
   display: flex;
   justify-content: center;
+  align-items: center;
+  gap: 8px;
 }
 
 #search-input {
@@ -373,6 +411,39 @@ img {
   opacity: 0.7;
 }
 
+#search-button,
+#clear-button {
+  padding: 8px 12px;
+  border-radius: 25px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: bold;
+}
+
+#search-button {
+  background-color: #ede8d0;
+  color: #4f473b;
+}
+
+#clear-button {
+  background-color: #4f473b;
+  color: #ede8d0;
+}
+
+#search-button:hover {
+  background-color: #d6d0b8;
+}
+
+#clear-button:hover {
+  background-color: #635b4a;
+}
+
+#search-button:active,
+#clear-button:active {
+  transform: scale(0.95);
+}
+
 /* No results message */
 .no-results {
   text-align: center;
@@ -383,6 +454,111 @@ img {
   border-radius: 8px;
   margin: 20px auto;
   max-width: 500px;
+}
+
+/* Edit modal styles */
+#edit-modal .modal-content {
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+#edit-songs-container {
+  max-height: 300px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.form-actions button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#cancel-edit-btn {
+  background-color: #4f473b;
+  color: white;
+}
+
+#cancel-edit-btn:hover {
+  background-color: #635b4a;
+}
+
+.edit-song-item {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.edit-song-item img {
+  width: 60px;
+  height: 60px;
+  margin-right: 15px;
+}
+
+.edit-song-info {
+  flex-grow: 1;
+}
+
+.edit-song-title {
+  font-weight: bold;
+  margin: 0 0 5px 0;
+}
+
+.edit-song-artist,
+.edit-song-album {
+  margin: 0 0 5px 0;
+  font-size: 14px;
+}
+
+.delete-song-btn {
+  background-color: #a83232;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
+}
+
+.delete-song-btn:hover {
+  background-color: #c04040;
 }
 
 /* Main Navigation styles */
